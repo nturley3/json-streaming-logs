@@ -1,4 +1,3 @@
-
 module JSONStreaming;
 
 export {
@@ -9,7 +8,7 @@ export {
 	## associated settings.
 	const JSONStreaming::disable_default_logs = F &redef;
 
-	## The number of extra files that Bro will leave laying around so that
+	## The number of extra files that Zeek will leave laying around so that
 	## any process watching the inode can finish.  The files will be named
 	## with the following scheme: `json_streaming_<path>.<num>.log`.  So, the 
 	## first conn log would be named: `json_streaming_conn.1.log`.
@@ -37,7 +36,7 @@ function add_json_streaming_log_extension(path: string): JsonStreamingExtension
 	}
 
 # We get the log suffix just to be safe.
-global log_suffix = getenv("BRO_LOG_SUFFIX") == "" ? "log" : getenv("BRO_LOG_SUFFIX");
+global log_suffix = getenv("ZEEK_LOG_SUFFIX") == "" ? "log" : getenv("ZEEK_LOG_SUFFIX");
 
 function rotate_logs(info: Log::RotationInfo): bool
 	{
@@ -55,7 +54,7 @@ function rotate_logs(info: Log::RotationInfo): bool
 	return T;
 	}
 
-event bro_init() &priority=-1000
+event zeek_init() &priority=-1000
 	{
 	for ( stream in Log::active_streams )
 		{
